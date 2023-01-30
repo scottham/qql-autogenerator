@@ -1,6 +1,8 @@
+import base64
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
 import chromedriver_autoinstaller
 from pyvirtualdisplay import Display
 display = Display(visible=0, size=(800, 800))  
@@ -33,8 +35,25 @@ for option in options:
     
 driver = webdriver.Chrome(options = chrome_options)
 
-driver.get('http://github.com')
-print(driver.title)
-with open('./GitHub_Action_Results.txt', 'w') as f:
-    f.write(f"This was written with a GitHub action {driver.title}")
+# script
 
+# script
+qql_url = 'https://qql.art/create'
+
+
+driver.get(qql_url)
+
+generate_button = driver.find_element(By.XPATH, '//button[contains(text(), "Generate Art")]')
+
+generate_button.click()
+while True:
+    try:
+        image = driver.find_element(By.XPATH, '//*[@id="__next"]/div/div/div/div[2]/div[2]/div/div[2]/img').get_attribute('src')
+        break
+    except:
+        continue
+
+image = image.split(',')[1]
+image_bytes = base64.b64decode(image)
+with open("qql_current.png", "wb") as img:
+    img.write(image_bytes)
