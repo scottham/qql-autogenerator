@@ -55,5 +55,5 @@ while True:
 
 image = image.split(',')[1]
 image_bytes = base64.b64decode(image)
-with open("qql_current.png", "wb") as img:
+with open("./qql_current.png", "wb") as img:
     img.write(image_bytes)
