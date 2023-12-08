@@ -5,6 +5,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 import chromedriver_autoinstaller
 from pyvirtualdisplay import Display
+from PIL import Image
 display = Display(visible=0, size=(800, 800))  
 display.start()
 
@@ -57,3 +58,7 @@ image = image.split(',')[1]
 image_bytes = base64.b64decode(image)
 with open("./qql_current.png", "wb") as img:
     img.write(image_bytes)
+
+img_jpg = Image.open('./qql_current.png')
+img_jpg.save('./qql_current.jpg')
+
